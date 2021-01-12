@@ -3,12 +3,14 @@ package com.example.apkagedaalura.iu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,6 +48,14 @@ public class ListaAlunosActivity extends /**Activity*/AppCompatActivity {
      public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
           super.onCreateContextMenu(menu, v, menuInfo);
           menu.add(OPCAO_DE_MENU_DE_CONTEXTO);
+     }
+
+     @Override//Qualquer menu de contexto que for clicado chamara esta funcao
+     public boolean onContextItemSelected(@NonNull MenuItem item) {
+          AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+          Aluno alunoEscolhido = adapter.getItem(adapterContextMenuInfo.position);//Posicao do item clicado dentro desse contexto
+          adapter.remove(alunoEscolhido);//remove o aluno
+          return super.onContextItemSelected(item);
      }
 
      private void configuraFABNovoAluno() {
