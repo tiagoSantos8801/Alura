@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/novoAluno_menu"
+        android:title="@string/novo_aluno" />
+
+    <item
+        android:id="@+id/remover_menu"
+        android:title="@string/remover" />
+
+    <item
+        android:id="@+id/editar_menu"
+        android:title="@string/editar" />
+
+</menu>

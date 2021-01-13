@@ -2,10 +2,13 @@ package com.example.apkagedaalura.iu.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apkagedaalura.R;
@@ -30,8 +33,24 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
 
           inicializarCampos();
-          configuraBotaoSalvar();
           carregaAluno();
+     }
+
+     @Override//Criando menu de opcoes
+     public boolean onCreateOptionsMenu(Menu menu) {
+          getMenuInflater().inflate(R.menu.actvity_formulario_aluno_menu, menu);
+          return super.onCreateOptionsMenu(menu);
+     }
+
+     @Override
+     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+          int itemId = item.getItemId();
+          if (itemId == R.id.activity_formulario_aluno_menu_salvar){
+               finalizaFormulario();
+          }
+
+          return super.onOptionsItemSelected(item);
      }
 
      private void carregaAluno() {
@@ -55,18 +74,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
           campoEmail.setText(aluno.getEmail());
      }
 
-     private void configuraBotaoSalvar() {
-          buttonSalvar.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-//                    Aluno alunoCriado = preencheAluno();
-//                    salvar(alunoCriado);
-
-                    finalizaFormulario();
-               }
-          });
-     }
-
      private void finalizaFormulario() {
           preencheAluno();
           if (aluno.temIdValido()) {
@@ -78,7 +85,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
      }
 
      private void inicializarCampos() {
-          buttonSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar);
           campoNome = findViewById(R.id.activity_formulario_aluno_nome);
           campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
           campoEmail = findViewById(R.id.activity_formulario_aluno_email);
@@ -96,6 +102,21 @@ public class FormularioAlunoActivity extends AppCompatActivity {
           aluno.setEmail(email);
      }
 }
+
+//######################################################################################################
+//     private void configuraBotaoSalvar() {
+//          buttonSalvar.setOnClickListener(new View.OnClickListener() {
+//               @Override
+//               public void onClick(View view) {
+//                    Aluno alunoCriado = preencheAluno();
+//                    salvar(alunoCriado);
+//
+//                    finalizaFormulario();
+//               }
+//          });
+//     }
+
+//######################################################################################################
 //     private void salvar(Aluno alunoCriado) {
 //          dao.salvar(alunoCriado);
 //          //startActivity(new Intent(FormularioAlunoActivity.this, ListaAlunosActivity.class));

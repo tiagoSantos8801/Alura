@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_add_24"
         android:layout_margin="20dp"
-        android:focusable="true" />
+        android:focusable="true"
+        android:contentDescription="@string/novo_aluno" />
 
     <ListView
         android:id="@+id/lista_alunos_listView"
