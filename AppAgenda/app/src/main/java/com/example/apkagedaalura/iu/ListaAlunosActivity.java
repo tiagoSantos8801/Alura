@@ -1,6 +1,5 @@
 package com.example.apkagedaalura.iu;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -11,11 +10,9 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apkagedaalura.R;
-import com.example.apkagedaalura.dao.AlunoDAO;
 import com.example.apkagedaalura.iu.activity.FormularioAlunoActivity;
 import com.example.apkagedaalura.iu.adapter.ListaAlunosAdapter;
 import com.example.apkagedaalura.model.Aluno;
@@ -25,9 +22,8 @@ import static com.example.apkagedaalura.iu.activity.ConstantesActivity.CHAVE_ALU
 
 public class ListaAlunosActivity extends /**Activity*/AppCompatActivity {
 
-     public static final String OPCAO_MENU_DE_CONTEXTO = "Remover";
-     AlunoDAO dao = new AlunoDAO();//Pega lista de alunos do formulario
-     private ListaAlunosAdapter adapter;
+     private final ListaAlunosView listaAlunosView = new ListaAlunosView(this);
+     //public static final String OPCAO_MENU_DE_CONTEXTO = "Remover";
 
      @Override//Ciclo de vida da activity
      protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,30 +52,16 @@ public class ListaAlunosActivity extends /**Activity*/AppCompatActivity {
      @Override//Qualquer menu de contexto que for clicado chamara esta funcao
      public boolean onContextItemSelected(@NonNull MenuItem item) {
           AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-          Aluno alunoEscolhido = adapter.getItem(menuInfo.position);//Posicao do item clicado dentro desse contexto
+          Aluno alunoEscolhido = listaAlunosView.adapter.getItem(menuInfo.position);//Posicao do item clicado dentro desse contexto
 
           if (item.getItemId() == R.id.novoAluno_menu) {//Ou getTitle().equals("Remover")
                abreFormularioInsereAluno();
           } else if (item.getItemId() == R.id.remover_menu) {
-               confirmaRemocao(alunoEscolhido);//Com AlertDialog
+               listaAlunosView.confirmaRemocao(alunoEscolhido);//Com AlertDialog
           } else {
                abreFormularioEditaAluno(alunoEscolhido);
           }
           return super.onContextItemSelected(item);
-     }
-
-     private void confirmaRemocao(Aluno alunoEscolhido) {
-          new AlertDialog.Builder(this)
-                  .setTitle("Removendo aluno")
-                  .setMessage("Tem certeza que deseja remover o aluno ?")
-                  .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                       @Override
-                       public void onClick(DialogInterface dialogInterface, int i) {
-                            remover(alunoEscolhido);//remove o aluno
-                       }
-                  })
-                  .setNegativeButton("Não", null)
-                  .show();//O builder so cria, temos que mostrar tambem
      }
 
      private void configuraFABNovoAluno() {
@@ -101,29 +83,15 @@ public class ListaAlunosActivity extends /**Activity*/AppCompatActivity {
           super.onResume();
 
           //Atualizando adapter
-          atualizandoAlunos();
-     }
-
-     private void atualizandoAlunos() {
-          adapter.atualiza(dao.todos());
+          listaAlunosView.atualizandoAlunos();
      }
 
      private void configuraLista() {
 
           ListView listaAlunos = findViewById(R.id.lista_alunos_listView);
-          configuraAdapter(listaAlunos);
+          listaAlunosView.configuraAdapter(listaAlunos);
           ConfiguraListnerDeCliquePorItem(listaAlunos);
           registerForContextMenu(listaAlunos);//Passa a view para o menu de contexto
-     }
-
-     private void remover(Aluno alunoEscolhido) {
-          dao.remove(alunoEscolhido);//Remove do banco
-          adapter.remove(alunoEscolhido);//Atualiza o adapter
-     }
-
-     private void configuraAdapter(ListView listaAlunos) {
-          adapter = new ListaAlunosAdapter(this);//Adapter personalizado
-          listaAlunos.setAdapter(adapter);
      }
 
      private void ConfiguraListnerDeCliquePorItem(ListView listaAlunos) {

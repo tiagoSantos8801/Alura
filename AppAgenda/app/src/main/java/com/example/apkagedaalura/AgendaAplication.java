@@ -26,7 +26,7 @@ public class AgendaAplication extends Application {//Tem que ir ao manifest dar 
 
           //Pre estipulados
           dao.salvar(new Aluno("Tiago", "+55(88) 9-97767854", "thiagosist8801@gmail.com"));
-          dao.salvar(new Aluno("Bruno", "+55(88) 9-88025502", "bsbBruno@gmail.com"));
-          dao.salvar(new Aluno("Brenda", "+55(88) 9-8801936", "brendaJade@gmail.com"));
+          dao.salvar(new Aluno("Bruno", "+55(88) 9-8802-5502", "bsbBruno@gmail.com"));
+          dao.salvar(new Aluno("Brenda", "+55(88) 9-8801-9367", "brendaJade@gmail.com"));
      }
 }

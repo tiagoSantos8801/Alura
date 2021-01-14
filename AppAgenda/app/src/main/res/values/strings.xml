@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Lista de alunos</string>
-    <string name="app_formulario">Novo aluno</string>
     <string name="nome">Nome</string>
     <string name="telefone">Telefone</string>
     <string name="e_mail">E-mail</string>
